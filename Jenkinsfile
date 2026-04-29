@@ -17,16 +17,16 @@ pipeline {
 
         stage('Install') {
             steps {
-                sh '/usr/local/bin/npm install'
+                sh '/usr/local/bin/node /usr/local/bin/npm install'
             }
         }
 
         stage('Test') {
             steps {
-                sh '/usr/local/bin/npm test'
+                sh '/usr/local/bin/node /usr/local/bin/npm test'
             }
         }
-
+ 
         stage('Build Docker') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
