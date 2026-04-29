@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "anas59/mon-app-js"
         IMAGE_TAG = "latest"
+        PATH = "/usr/local/bin:/usr/bin:/bin"
     }
 
     stages {
