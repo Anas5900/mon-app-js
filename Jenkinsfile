@@ -16,13 +16,13 @@ pipeline {
 
         stage('Install') {
             steps {
-                sh 'npm install'
+                sh '/usr/local/bin/npm install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                sh '/usr/local/bin/npm test'
             }
         }
 
@@ -47,9 +47,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Docker (commenté, remplacé par Kubernetes)
                 // sh "docker run -d -p 3000:3000 --name mon-app-js ${IMAGE_NAME}:${IMAGE_TAG}"
-
                 sh "kubectl apply -f deployment.yaml"
                 sh "kubectl apply -f service.yaml"
             }
@@ -58,14 +56,10 @@ pipeline {
 
     post {
         success {
-            mail to: 'anasbouchlaghem@gmail.com',
-                 subject: "✅ Pipeline réussi - ${env.JOB_NAME}",
-                 body: "Le pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} s'est terminé avec succès."
+            echo 'Pipeline réussi !'
         }
         failure {
-            mail to: 'anasbouchlaghem@gmail.com',
-                 subject: "❌ Pipeline échoué - ${env.JOB_NAME}",
-                 body: "Le pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} a échoué. Vérifie les logs."
+            echo 'Pipeline échoué !'
         }
     }
 }
